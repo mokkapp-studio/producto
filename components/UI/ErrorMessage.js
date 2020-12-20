@@ -5,12 +5,11 @@ import { WarningOutlined } from '@ant-design/icons';
 
 const ErrorMSN = styled.div`
     display: flex;
-    margin-top: -1.2em;
+    width: 100%;
     span{
         color: red;
-        margin: .5em;
     }
-`
+`;
 
 const Span = styled.span`
     color: red;
@@ -22,7 +21,6 @@ const ErrorMessage = ({mensaje}) => {
 
     return(
         <ErrorMSN>
-        <WarningOutlined />
         <Span>{mensaje}</Span>
         </ErrorMSN>
     ) 

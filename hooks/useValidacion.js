@@ -31,10 +31,12 @@ const useValidacion = (stateInicial, validar, fn) => {
     // Función que se ejecuta cuando se hace el submit
 
     const handleSubmit = e => {
-
+        e.preventDefault();
+        console.log('Success:', valores);
         const erroresValidacion = validar(valores);
         setErrores(erroresValidacion);
         setSubmitForm(true);
+        return false;
     }
 
     return {

@@ -13,10 +13,15 @@ export const ContainerLogin = styled.div`
         box-shadow: 0px 2px 5px 0px #e6e6e6;
         border: 1px solid #fff;
         border-radius: 3px;
+        max-width: 400px;
+        width: 90%;
         &:hover{
             box-shadow: 0px 2px 10px 0px #e6e6e6;
             -webkit-box-shadow: 0px 2px 10px 0px #e6e6e6;
         }
+    }
+    .section-form{
+        margin-bottom: 1.5em;
     }
 
 `;
