@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 import Router, { useRouter } from 'next/router';
 import Layout from '../components/Layout';
-import { Input, Upload, Button } from 'antd';
+import { Input, notification } from 'antd';
 import styled from '@emotion/styled';
 import { ContainerLogin } from '../components/UI/Formulario';
 import  ErrorMessage  from '../components/UI/ErrorMessage';
+
 
 import { FirebaseContext } from '../firebase';
 import FileUploader from "react-firebase-file-uploader"
@@ -14,6 +15,17 @@ import validarProducto from '../validaciones/validarProducto';
 
 
 const { TextArea } = Input;
+
+const openNotification = () => {
+    notification.open({
+      message: 'Has creado correctamente',
+      description:
+        'Esto es el body de la notificación',
+      onClick: () => {
+        console.log('Notification Clicked!');
+      },
+    });
+  };
 
 
 const BTNCP = styled.input`
@@ -40,6 +52,7 @@ const ContentDash = styled.div`
 
 const NuevoProyecto = () => {
 
+    // States para validar y enviar la imgen al storage.
     const [nombreimagen, guardarNombre] = useState('');
     const [subiendo, guardarSubiendo] = useState(false);
     const [ progreso, guardarProgreso ] = useState(0);
@@ -85,6 +98,10 @@ const NuevoProyecto = () => {
       // insertarlo en la base de datos
       
       firebase.db.collection('productos').add(producto);
+
+      router.push('/dashboard')
+
+      openNotification();
       
     }
    
