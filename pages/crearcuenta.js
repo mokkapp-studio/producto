@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
+import Router from 'next/router';
 import Layout from '../components/Layout';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Input, Checkbox } from 'antd';
+import styled from '@emotion/styled';
 import { ContainerLogin } from '../components/UI/Formulario';
-import  ErrorMessage  from '../components/UI/ErrorMessage'
+import  ErrorMessage  from '../components/UI/ErrorMessage';
 
 import firebase from '../firebase'
 // validaciones 
 import useValidacion from '../hooks/useValidacion';
 import validarCrearCuenta from '../validaciones/validarCrearCuenta';
 
+
+const BTNCC = styled.input`
+    width: 100%;
+    height: 3em;
+    border: none;
+    background: #39a8af;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+`;
 
 
 const STATE_INICIAL = {
@@ -19,6 +31,9 @@ const STATE_INICIAL = {
 
 
 const CrearCuenta = () => {
+
+    const [ terminos, setTerminos ] = useState(true)
+    const [ usuarioregistrado, setUsuarioregistrado ] = useState(false);
 
     const {
         valores,
@@ -35,21 +50,24 @@ const CrearCuenta = () => {
     async function crearCuenta() {
        try {
         await firebase.registrar(username, email, password);
+        Router.push('/dashboard');
 
        } catch (error) {
-            console.error('HUbo error al crear usuario', error)
+            console.error('Hubo error al crear usuario', error.message);
+            setUsuarioregistrado(error.message)
        }
 
     }
 
 
+    // UseState para validar la aceptación de terminos y habilitar el botón de crear cuenta
 
-    // const [ terminos, setTerminos ] = useState(true)
+   
 
-    // function onChangeCheck(e) {
-    //     console.log(`checked = ${e.target.checked}`);
-    //     setTerminos(!e.target.checked)
-    //   }
+    function onChangeCheck(e) {
+        console.log(`checked = ${e.target.checked}`);
+        setTerminos(!e.target.checked)
+      }
 
 
 
@@ -102,8 +120,12 @@ const CrearCuenta = () => {
                         onChange={handleChange}
                     />
                 </div>
-                {/* <Checkbox onChange={onChange}>Checkbox</Checkbox> */}
-                <input disabled="true" type="submit" value="Create"/>
+                <div className="section-form">
+                <Checkbox onChange={onChangeCheck}>Términos y condiciones</Checkbox>
+                </div>
+                <BTNCC disabled={terminos} type="submit" value="Create"/>
+                <br/>
+                <p>{usuarioregistrado && <ErrorMessage mensaje={usuarioregistrado}/>}</p>
             </form>
             </div>
             </ContainerLogin>

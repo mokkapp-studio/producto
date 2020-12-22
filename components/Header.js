@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import { Input, Button } from 'antd';
 import Link from 'next/link';
+import { FirebaseContext } from '../firebase';
 
 const Navbar = styled.header`
     background: #fff;
@@ -28,7 +29,9 @@ const Navbar = styled.header`
 
 const Header = () => {
 
-    const usuario = false;
+    const { usuario, firebase } = useContext(FirebaseContext);
+
+    
 
     return(
         <Navbar style={ usuario ? {marginLeft: '220px', paddingRight: '220px'} : null}>
@@ -36,8 +39,14 @@ const Header = () => {
                 {usuario ? (
                     <>
                     <div><Input/></div>
+                   
                     <div>
-                        <Button type="primary">Log out</Button>
+                        {/* <p>{usuario.displayName}</p> */}
+                        <Button onClick={() => firebase.cerrarSesion()} type="primary">
+                            <Link href="/">
+                            Log out
+                            </Link>
+                        </Button>
                     </div>
                     </>
                 )
