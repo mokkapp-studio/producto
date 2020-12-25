@@ -12,6 +12,7 @@ import FileUploader from "react-firebase-file-uploader"
 // validaciones 
 import useValidacion from '../hooks/useValidacion';
 import validarProducto from '../validaciones/validarProducto';
+import Password from 'antd/lib/input/Password';
 
 
 const { TextArea } = Input;
@@ -68,6 +69,8 @@ const NuevoProyecto = () => {
         handleSubmit,
         handleBlur
     } = useValidacion(STATE_INICIAL, validarProducto , crearProducto);
+
+
    
     const { name,  imagen, description } = valores;
    
@@ -92,7 +95,11 @@ const NuevoProyecto = () => {
           creado: Date.now(),
           ratio1: 0,
           ratio2: 10,
-          ratio3: 0
+          ratio3: 0,
+          creador: {
+              id: usuario.uid,
+              nombre: usuario.displayName
+          }
       }
    
       // insertarlo en la base de datos
@@ -213,3 +220,11 @@ const NuevoProyecto = () => {
 export default NuevoProyecto;
 
 
+
+
+// nueva red: 
+
+// nueva nombre de wifi: VODAFONE84 / VODAFONE84_G5
+
+
+// Password: pilar1955

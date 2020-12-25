@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styled from '@emotion/styled';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'; 
+import Link from 'next/link';
+
 
 const Card = styled.div`
     width: 100%;
@@ -9,7 +12,7 @@ const Card = styled.div`
     display: flex;
     img{
         width: 120px;
-        height: auto;
+        height: 50%; 
         margin-right: 1em;
     }
 `;
@@ -17,36 +20,53 @@ const Card = styled.div`
 
 const CardProducto = ({producto}) => {
 
-    const [ ratioA, setRatioA ] = useState('')
+    const [ ratioA, setRatioA ] = useState('');
+    const [ añadirvotos, setAñadirvotos ] = useState(0);
 
 
-    const { name, description, urlimagen, ratio1, ratio2, ratio3 } = producto;
+    const { id, name, description, urlimagen, ratio1, ratio2, ratio3, votos, comentarios, creado } = producto;
 
-    // function ratio(ratio2) {
+    console.log(añadirvotos)
+
+    // useEffect(() =>{
+
     //     if(ratio2 === 90){
-    //         setRatioA(ratio2 === 100)
+    //         setRatioA('Lider')
     //     } 
-    //     return
-    // } 
-    // ratio()
-    // console.log(ratioA)
-
-    useEffect(() =>{
-
-        if(ratio2 === 90){
-            setRatioA('Lider')
-        } 
     
-    },[ratio2])
+    // },[ratio2])
+    
+
+    const votarproducto = () => {
+
+        const nuevoTotal = votos + 1;
+
+        setAñadirvotos ({
+            ...votos,
+            votos: nuevoTotal
+        })
+
+
+    }
 
     return(
         <Card>
             <img src={urlimagen}/>
             <div>
-                <h3>{name}</h3>
+                <Link href="/productos/[id]" as={`/productos/${id}`}>
+                    <h3>{name}</h3>
+                </Link> 
                 <p>{description}</p>
                 <p>{ratio2}</p>
                 <p>{ratioA}</p>
+                <p>{votos}</p>
+                <div>
+                    <p>Cometarios:</p>
+                    <p>{comentarios.length}</p>
+                </div>
+                <p>publicado hace: {formatDistanceToNow( new Date(creado))}</p>
+                <p>likes: {votos}</p>
+                <button onClick={votarproducto}>Votar</button>
             </div>
         </Card>
         
